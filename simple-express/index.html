@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h2>Test Simple Express based REST API</h2>
+
+    <button onclick="listAllHeroes()">List all Heroes</button><br>
+    <hr>
+    <input type="text" placeholder="New hero name" id="newHeroName">
+    <button type="button" onclick="addNewHero();">Add new Hero</button>
+    <hr>
+    <input type="text" placeholder="Hero number" id="heroNumber">
+    <button type="button" onclick="showHeroById();">Show Hero by Id</button>
+    <hr>
+
+    <p id="herolist"></p>
+
+
+    <script>
+        function listAllHeroes() {
+            fetch('/heroes')
+                .then((response) => response.json())
+                .then((result) => {
+                    document.getElementById("herolist").innerHTML = 
+                        "Current hero list: " + result;
+                });
+
+        }
+
+        function showHeroById() {
+            var heroNumber = document.getElementById("heroNumber").value;
+
+            fetch('/heroes/' + heroNumber)
+                .then((response) => response.json())
+                .then((result) => {
+                    document.getElementById("herolist").innerHTML = 
+                        "Hero number: " + heroNumber + " Hero name: " + result;
+                });
+
+        }
+
+        function addNewHero() {
+        // Selecting the input element and get its value
+        var newHeroName = document.getElementById("newHeroName").value;
+
+        fetch("/heroes/", {
+            method: 'POST',
+            body: newHeroName
+        })
+          .then(response => response.text())
+          // .then(result => console.log(result))
+          .then(result => document.getElementById("herolist").innerHTML =
+            "Updated hero list: " + (result))
+          .catch(error => console.log('error', error));  
+      }
+    </script>
+
+</body>
+
+</html>

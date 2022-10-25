@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require("body-parser");
-const router = express.Router();
+const path = require('path');
 
 const app = express()
 const port = 3000
@@ -8,6 +8,7 @@ const port = 3000
 // Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
+app.use(express.static('public'));
 
 heroes = ["Don Ciro", "Savastano", "Janfranco"];
 
@@ -31,6 +32,11 @@ app.post('/heroes', function (req, res) {
   } else {
     res.json("No new Hero provided")
   }
+});
+
+// sendFile will go here
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 app.listen(port, () => {

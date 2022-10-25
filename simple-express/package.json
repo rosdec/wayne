@@ -2,7 +2,7 @@
   "name": "basic-express",
   "version": "1.0.0",
   "description": "Minimal example of a REST API written in Express.js",
-  "main": "basic-express.js",
+  "main": "simple-express.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

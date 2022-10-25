@@ -2,21 +2,32 @@ import { Wayne } from 'https://cdn.jsdelivr.net/gh/jcubic/wayne@master/index.js'
 
 const app = new Wayne();
 
-const users = {
-  1: 'Jakub T. Jankiewicz',
-  2: 'John Doe',
-  3: 'Jane Doe'
-};
+var heroes = ["Don Ciro", "Savastano", "Janfranco"];
 
-app.get('/user/{id}', function(req, res) {
-  const user = users[req.params.id];
-  if (user) {
-    res.json({result: user});
+app.get('/heroes', function (req, res) {
+  res.json(heroes);
+});
+
+app.get('/heroes/{id}', function (req, res) {
+  if (req.params.id) {
+    const hero = heroes[req.params.id];
+    if (hero)
+      res.json(hero);
+    else
+      res.json("Hero Not Found");
   } else {
-    res.json({error: 'User Not Found'});
+    res.json(heroes);
   }
 });
 
-app.get('/error', function(req, res) {
-  nonExisting();
-});
+app.post('/heroes/', async function (req, res) {
+  req.text().then(text => {
+    if (text.length > 0) {
+      heroes.push(text);
+
+      res.json(heroes);
+    } else {
+      res.json("No new Hero provided")
+    }
+  });
+})

@@ -12,7 +12,11 @@ app.use(express.static('public'));
 
 heroes = ["Don Ciro", "Savastano", "Janfranco"];
 
-app.get('/heroes/:id?', function (req, res) {
+app.get('/heroes', function (req, res) {
+  res.json(heroes);
+});
+
+app.get('/heroes/:id', function (req, res) {
   if (req.params.id) {
     const hero = heroes[req.params.id];
     if (hero)
